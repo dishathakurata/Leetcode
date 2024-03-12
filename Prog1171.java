@@ -1,0 +1,58 @@
+package leetcode;
+
+//1171. Remove zero sum consecutive nodes from linked list
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ListNode {
+     int val;
+     ListNode next;
+     
+     ListNode() {}
+     
+     ListNode(int val) { this.val = val; }
+     
+     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ }
+
+class Solution {
+	
+    public ListNode removeZeroSumSublists(ListNode head) {
+    	
+        Map<Integer, ListNode> map = new HashMap<>();
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        int prefixSum = 0;
+        map.put(prefixSum, dummy);
+
+        while(head != null) {
+            prefixSum += head.val;
+            
+            if(map.containsKey(prefixSum)) {
+                ListNode start = map.get(prefixSum);
+                ListNode curr = start;
+                int sum = prefixSum;
+                
+                while(curr != head) {
+                    curr = curr.next;
+                    sum += curr.val;
+                    
+                    if(curr != head) {
+                        map.remove(sum);
+                    }
+                }
+
+                start.next = head.next;
+            }
+
+            else {
+                map.put(prefixSum, head);
+            }
+
+            head = head.next;
+        }
+
+        return dummy.next;
+    }
+}
