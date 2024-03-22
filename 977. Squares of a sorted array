@@ -1,5 +1,3 @@
-package leetcode;
-
 //977. Squares of a sorted array
 
 class Solution {
