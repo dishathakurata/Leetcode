@@ -1,5 +1,3 @@
-package leetcode;
-
 //2864. Maximum odd binary number
 
 class Solution {
