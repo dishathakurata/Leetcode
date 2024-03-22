@@ -1,5 +1,3 @@
-package leetcode;
-
 //791. Custom sort string
 
 import java.util.HashMap;
