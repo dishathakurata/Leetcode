@@ -1,8 +1,5 @@
-package leetcode;
-
 //19. Remove nth node from end of list
 
- // Definition for singly-linked list.
  public class ListNode {
       int val;
       ListNode next;
