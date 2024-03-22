@@ -1,5 +1,3 @@
-package leetcode;
-
 //268. Missing number
 
 class Solution {
