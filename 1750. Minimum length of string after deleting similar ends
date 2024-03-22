@@ -1,5 +1,3 @@
-package leetcode;
-
 //1750. Minimum length of string after deleting similar ends
 
 class Solution {
