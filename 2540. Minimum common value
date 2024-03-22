@@ -1,5 +1,3 @@
-package leetcode;
-
 //2540. Minimum common value
 
 class Solution {
