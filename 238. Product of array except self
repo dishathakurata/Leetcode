@@ -1,5 +1,3 @@
-package leetcode;
-
 //238. Product of array except self
 
 class Solution {
