@@ -1,5 +1,3 @@
-package leetcode;
-
 //930. Binary subarrays with sum
 
 import java.util.HashMap;
