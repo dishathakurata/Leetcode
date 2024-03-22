@@ -1,0 +1,57 @@
+//234. Palindrome linked list
+
+public class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+}
+
+class Solution {
+
+    public static ListNode reverse(ListNode head) {
+        ListNode curr = head;
+    	ListNode prev = null;
+    	ListNode next = null;
+    	
+    	while(curr != null) {
+    		next = curr.next;
+    		curr.next = prev;
+    		prev = curr;
+    		curr = next;
+    	}
+    	
+    	head = prev;
+
+        return head;
+    }
+
+    public boolean isPalindrome(ListNode head) {
+        if(head == null || head.next == null) {
+            return true;
+        }
+
+        ListNode slowp = head;
+        ListNode fastp = head;
+
+        while(fastp.next != null && fastp.next.next != null) {
+            fastp = fastp.next.next;
+            slowp = slowp.next;
+        }
+
+        slowp.next = reverse(slowp.next);
+        slowp = slowp.next;
+
+        while(slowp != null) {
+            if(head.val != slowp.val) {
+                return false;
+            }
+
+            head = head.next;
+            slowp = slowp.next;
+        }
+
+        return true;
+    }
+}
