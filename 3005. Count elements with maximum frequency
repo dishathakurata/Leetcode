@@ -1,5 +1,3 @@
-package leetcode;
-
 //3005. Count elements with maximum frequency
 
 import java.util.HashMap;
