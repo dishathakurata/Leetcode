@@ -1,5 +1,3 @@
-package leetcode;
-
 //141. Linked list cycle
 
 class ListNode {
