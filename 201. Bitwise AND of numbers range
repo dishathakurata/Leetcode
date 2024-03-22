@@ -1,6 +1,5 @@
-package leetcode;
-
 //201. Bitwise AND of numbers range
+
 class Solution {
     public int rangeBitwiseAnd(int left, int right) {
         int count = 0;
