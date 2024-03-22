@@ -1,5 +1,3 @@
-package leetcode;
-
 //948. Bag of tokens
 
 import java.util.Arrays;
