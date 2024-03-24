@@ -1,0 +1,17 @@
+//287. Find the duplicate number
+
+class Solution {
+    public int findDuplicate(int[] nums) {
+        boolean[] taken = new boolean[nums.length];
+
+        for(int n: nums) {
+            if(taken[n]) {
+                return n;
+            }
+
+            taken[n] = true;
+        }
+
+        return -1;
+    }
+}
