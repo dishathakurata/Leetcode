@@ -1,0 +1,25 @@
+//713. Subarray product less than k
+
+class Solution {
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        int i = 0;
+        int j = 0;
+        int n = nums.length;
+        int count = 0;
+        int product = 1;
+
+        while(j < n) {
+            product *= nums[j];
+
+            while(i <= j && product >= k) {
+                product = product / nums[i];
+                i++;
+            }
+
+            count += (j - i + 1);
+            j++;
+        }
+
+        return count;
+    }
+}
