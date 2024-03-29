@@ -1,0 +1,32 @@
+//2962. Count subarrays where max element appears at least k times
+
+class Solution {
+    public long countSubarrays(int[] nums, int k) {
+        int max_num = Integer.MIN_VALUE;
+        int count = 0, left = 0, right = 0;
+        long ans = 0;
+
+        for(int num: nums) {
+            max_num = Math.max(max_num, num);
+        }
+
+        while(right < nums.length || left > right) {
+            if(nums[right] == max_num) {
+                count++;
+            }
+
+            while(count >= k) {
+                if(nums[left] == max_num) {
+                    count--;
+                }
+
+                left++;
+                ans += nums.length - right;
+            }
+
+            right++;
+        }
+
+        return ans;
+    }
+}
