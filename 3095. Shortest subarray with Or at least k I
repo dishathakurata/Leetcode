@@ -1,0 +1,23 @@
+//3095. Shortest subarray with Or at least k I
+
+class Solution {
+    public int minimumSubarrayLength(int[] nums, int k) {
+        int n = nums.length;
+        int minLen = Integer.MAX_VALUE;
+
+        for(int left = 0; left < n; left++) {
+            int current = 0;
+
+            for(int right = left; right < n; right++) {
+                current |= nums[right];
+
+                if(current >= k) {
+                    minLen = Math.min(minLen, right - left + 1);
+                    break;
+                }
+            }
+        }
+
+        return minLen == Integer.MAX_VALUE ? -1 : minLen;
+    }
+}
