@@ -1,0 +1,23 @@
+//205. Isomorphic strings
+
+class Solution {
+    public boolean isIsomorphic(String s, String t) {
+        int[] sFreq = new int[256];
+        int[] tFreq = new int[256];
+
+        if(s.length() != t.length()) {
+            return false;
+        }
+        
+        for(int i = 0; i < s.length(); i++) {
+            if(sFreq[s.charAt(i)] != tFreq[t.charAt(i)]) {
+                return false;
+            }
+            
+            sFreq[s.charAt(i)] = i + 1;
+            tFreq[t.charAt(i)] = i + 1;
+        }
+        
+        return true;
+    }
+}
