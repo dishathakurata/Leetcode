@@ -1,0 +1,56 @@
+//3112. Minimum time to visit disappearing nodes
+
+class Solution {
+    public int[] minimumTime(int n, int[][] edges, int[] disappear) {
+        List<int[]>[] adjList = new List[n];
+
+        for(int i = 0; i < n; i++) {
+            adjList[i] = new ArrayList<>();
+        }
+
+        for(int[] edge : edges) {
+            int u = edge[0];
+            int v = edge[1];
+            int length = edge[2];
+            adjList[u].add(new int[]{v, length});
+            adjList[v].add(new int[]{u, length});
+        }
+        
+        int[] distances = new int[n];
+        Arrays.fill(distances, Integer.MAX_VALUE);
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+        pq.offer(new int[]{0, 0});
+        distances[0] = 0;
+        
+        while(!pq.isEmpty()) {
+            int[] curr = pq.poll();
+            int node = curr[0];
+            int distance = curr[1];
+            
+            if(distance > distances[node]) {
+                continue;
+            }
+
+            for(int[] neighbor : adjList[node]) {
+                int nextNode = neighbor[0];
+                int edgeLength = neighbor[1];
+                int newDistance = distance + edgeLength;
+
+                if(newDistance < disappear[nextNode]) {
+                    if(newDistance < distances[nextNode]) {
+                        distances[nextNode] = newDistance;
+                        pq.offer(new int[]{nextNode, newDistance});
+                    }
+                }
+            }
+        }
+
+        for(int i = 0; i < n; i++) {
+            if(distances[i] == Integer.MAX_VALUE) {
+                distances[i] = -1;
+            }
+        }
+        
+        return distances;
+    }   
+}
