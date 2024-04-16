@@ -1,0 +1,43 @@
+//623. Add one row to tree
+
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+class Solution {
+    public TreeNode addOneRow(TreeNode root, int val, int depth) {
+        if(root == null) {
+            return root;
+        }
+
+        if(depth == 1) {
+            TreeNode cur = new TreeNode(val);
+            cur.left = root;
+            root = cur;
+        }
+
+        else if((depth - 1) == 1) {
+            TreeNode cur1 = new TreeNode(val);
+            cur1.left = root.left;
+            root.left = cur1;
+
+            TreeNode cur2 = new TreeNode(val);
+            cur2.right = root.right;
+            root.right = cur2;
+        }
+
+        addOneRow(root.left, val, depth - 1);
+        addOneRow(root.right, val, depth - 1);
+
+        return root;
+    }
+}
