@@ -1,0 +1,138 @@
+//834. Sum of distances in tree
+
+class Solution {
+    static final int MAX = 30000;
+
+    public int[] sumOfDistancesInTree(int n, int[][] edges) {
+        int[][] tree = tree(n, edges);
+        int[] parents = parents(tree);
+
+        return solve(tree, parents);
+    }
+
+    static final int[] parents(int[][] tree) {
+        final int[] p = new int[tree.length];
+
+        for(int i = 0; i < tree.length; i++) {
+            for(int c : tree[i]) {
+                p[c] = i;
+            }
+        }
+
+        p[0] = -1;
+        return p;
+    }
+
+    static final int[] computRes(int[][] tree) {
+        final int[] p = new int[tree.length];
+
+        for(int i = 0; i < tree.length; i++) {
+            for(int c : tree[i]) {
+                p[c] = i;
+            }
+        }
+
+        p[0] = -1;
+        return p;
+    }
+
+    static final int[] solve(int[][] tree, int[] parents) {
+        int len = 0;
+        int[] distance = new int[tree.length];
+        int[] children = new int[tree.length];
+
+        for(int i = 0; i < tree.length; i++) {
+            final int tl = tree[i].length;
+
+            if(tl == 0) {
+                q[len++] = i;
+            }
+            else {
+                counts[i] = tl;
+            }
+        }
+
+        for (int i = 0; i < len; i++) {
+            final int node = q[i];
+            final int parent = parents[node];
+
+            if(parent >= 0) {
+                final int newChildren = children[node] + 1;
+                children[parent] += newChildren;
+                distance[parent] += distance[node] + newChildren;
+                
+                if(--counts[parent] == 0) {
+                    q[len++] = parent;
+                }
+            }
+        }
+
+        len = 0;
+
+        for(int next : tree[0]) {
+            q[len++] = next;
+        }
+
+        for(int i = 0; i < len; i++) {
+            final int node = q[i];
+            final int parent = parents[node];
+            distance[node] = distance[parent] - 2 * (children[node] + 1) + tree.length;
+
+            for (int next : tree[node]) {
+                q[len++] = next;
+            }
+        }
+
+        return distance;
+    }
+
+    static final int[] q = new int[MAX];
+    static final int[] counts = new int[MAX];
+
+    static int[][] tree(final int n, final int[][] edges) {
+        for(int[] e : edges) {
+            counts[e[0]]++;
+            counts[e[1]]++;
+        }
+
+        final int[][] r = new int[n][];
+        
+        for(int i = 0; i < n; i++) {
+            r[i] = new int[counts[i]];
+        }
+
+        for(int[] e : edges) {
+            final int n1 = e[0];
+            final int n2 = e[1];
+            r[n1][--counts[n1]] = n2;
+            r[n2][--counts[n2]] = n1;
+        }
+
+        return filter(r);
+    }
+
+    private static int[][] filter(int[][] a) {
+        final boolean[] visited = new boolean[a.length];
+        int qLen = 0;
+        q[qLen++] = 0;
+        visited[0] = true;
+
+        for(int i = 0; i < qLen; i++) {
+            final int node = q[i];
+            final int[] r = a[node];
+            int len = 0;
+            
+            for(int n : r) {
+                if(!visited[n]) {
+                    visited[n] = true;
+                    q[qLen++] = n;
+                    r[len++] = n;
+                }
+            }
+
+            a[node] = Arrays.copyOf(r, len);
+        }
+        
+        return a;
+    }
+}
