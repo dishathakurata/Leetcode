@@ -1,0 +1,27 @@
+//2000. Reverse prefix of word
+
+class Solution {
+    public String reversePrefix(String word, char ch) {
+        StringBuilder s = new StringBuilder();
+        int j = word.indexOf(ch);
+
+        if(j == word.length()) {
+            return word;
+        }
+
+        int i = j;
+        ++i;
+
+        while(j >= 0) {
+            s.append(word.charAt(j));
+            j--;
+        }
+
+        while(i < word.length()) {
+            s.append(word.charAt(i));
+            i++;
+        }
+
+        return s.toString();
+    }
+}
