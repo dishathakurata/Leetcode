@@ -1,0 +1,27 @@
+//552. Student attendance record II
+
+class Solution {
+    public int checkRecord(int n) {
+        long mod = (long)1e9 + 7;
+        int dp[][][] = new int[n+1][2][3];
+
+        for(int A = 0 ; A <=1 ; A++) {
+            for(int L = 0 ; L <=2 ; L++) {
+                dp[0][A][L] = 1;
+            }
+        }
+
+        for(int i = 1 ; i <= n ; i++) {
+            for(int A = 0 ; A <=1 ; A++) {
+                for(int L = 0; L <=2 ; L++) {
+                    long res = (dp[i-1][A][0]);
+                    res += ( L+1 <= 2 ? dp[i-1][A][L+1] : 0);
+                    res += ( A+1 <= 1 ? dp[i-1][A+1][0] : 0);
+                    
+                    dp[i][A][L] = (int)(res % mod);
+                }
+            }
+        }
+        return dp[n][0][0];
+    }
+}
