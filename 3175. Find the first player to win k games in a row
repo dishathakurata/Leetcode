@@ -1,0 +1,37 @@
+//3175. Find the first player to win k games in a row
+
+class Solution {
+    public int findWinningPlayer(int[] skills, int k) {
+        int n = skills.length;
+        Queue<Integer> queue = new LinkedList<>();
+        
+        // Initialize the queue with player indices
+        for (int i = 0; i < n; i++) {
+            queue.offer(i);
+        }
+
+        int currentWinner = queue.poll();
+        int winCount = 0;
+
+        while (winCount < k) {
+            int challenger = queue.poll();
+            if (skills[currentWinner] > skills[challenger]) {
+                // Current winner wins
+                winCount++;
+                queue.offer(challenger);
+            } else {
+                // Challenger wins
+                queue.offer(currentWinner);
+                currentWinner = challenger;
+                winCount = 1;
+            }
+
+            // If the current winner wins more games than there are players, he has already won k times
+            if (winCount >= k || winCount >= n) {
+                return currentWinner;
+            }
+        }
+
+        return currentWinner;
+    }
+}
