@@ -1,0 +1,49 @@
+//31. Next permutation
+
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int ind = -1;
+        int n = nums.length - 1;
+        int l = 0;
+
+        for(int i = nums.length - 2; i >= 0; i--) {
+            if(nums[i] < nums[i + 1]) {
+                ind = i;
+                break;
+            }
+        }
+
+        if(ind == -1) {
+            while(l < n) {
+                int temp = nums[l];
+                nums[l] = nums[n];
+                nums[n] = temp;
+
+                l++;
+                n--;
+            }
+        }
+        else {
+            int t = ind + 1;
+
+            for(int i = nums.length - 1; i > ind; i--) {
+                if(nums[i] > nums[ind]) {
+                    int temp = nums[i];
+                    nums[i] = nums[ind];
+                    nums[ind] = temp;
+
+                    break;
+                }
+            }
+
+            while(t < n) {
+                int temp = nums[t];
+                nums[t] = nums[n];
+                nums[n] = temp;
+
+                t++;
+                n--;
+            }
+        }
+    }
+}
