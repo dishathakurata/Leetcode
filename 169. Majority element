@@ -1,0 +1,21 @@
+//169. Majority element
+
+class Solution {
+    public int majorityElement(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for(int i = 0; i < nums.length; i++) {
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        }
+
+        int lim = (int)Math.floor(nums.length / 2);
+
+        for(Map.Entry<Integer, Integer> mapEl : map.entrySet()) {
+            if(mapEl.getValue() > lim) {
+                return mapEl.getKey();
+            }
+        }
+
+        return -1;
+    }
+}
