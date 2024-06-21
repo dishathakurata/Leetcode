@@ -1,0 +1,21 @@
+//229. Majority element II
+
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        List<Integer> ans = new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>();
+        int lim = (int)Math.floor(nums.length / 3);
+
+        for(int n : nums) {
+            map.put(n, map.getOrDefault(n, 0) + 1);
+        }
+
+        for(Map.Entry<Integer, Integer> el : map.entrySet()) {
+            if(el.getValue() > lim) {
+                ans.add(el.getKey());
+            }
+        }
+
+        return ans;
+    }
+}
