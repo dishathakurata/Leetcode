@@ -1,0 +1,49 @@
+//242. Valid anagram
+
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        //Solution 1
+        int[] ch1 = new int[26];
+        int[] ch2 = new int[26];
+
+        for(int i = 0; i < s.length(); i++) {
+            ch1[s.charAt(i) - 'a']++;
+        }
+
+        for(int i = 0; i < t.length(); i++) {
+            ch2[t.charAt(i) - 'a']++;
+        }
+
+        for(int i = 0; i < 26; i++) {
+            if(ch1[i] != ch2[i]) {
+                return false;
+            }
+        }
+
+        return true;
+
+        //Solution 2
+        if(s.length() != t.length()) {
+            return false;
+        }
+
+        s = sortString(s);
+        t = sortString(t);
+
+        for(int i = 0; i < s.length(); i++) {
+            if(s.charAt(i) != t.charAt(i)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static String sortString(String str) {
+        char chArr[] = str.toCharArray();
+
+        Arrays.sort(chArr);
+
+        return new String(chArr);
+    }
+}
