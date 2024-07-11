@@ -1,0 +1,29 @@
+//1190. Reverse substrings between each pair of parentheses
+
+class Solution {
+    int i = 0;
+
+    public String reverseParentheses(String s) {
+        char[] ar = s.toCharArray();
+        return func(ar);
+    }
+
+    public String func(char[] s) {
+        StringBuilder sb = new StringBuilder();
+
+        while(i < s.length){
+            if(s[i] == ')'){
+                i++;
+                return sb.reverse().toString();
+            }else if(s[i] == '('){
+                i++;
+                String st  = func(s);
+                sb.append(st);
+            }else{
+                sb.append(s[i]);
+                i++;
+            }
+        }
+        return sb.toString();
+    }
+}
