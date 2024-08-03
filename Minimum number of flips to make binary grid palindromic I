@@ -1,0 +1,51 @@
+//Minimum number of flips to make binary grid palindromic I
+
+class Solution {
+    private static int minFlipsForRows(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int totalFlips = 0;
+
+        for(int i = 0; i < m; i++) {
+            int[] row = grid[i];
+            int flips = 0;
+
+            for(int j = 0; j < n / 2; j++) {
+                if(row[j] != row[n - j - 1]) {
+                    flips++;
+                }
+            }
+
+            totalFlips += flips;
+        }
+
+        return totalFlips;
+    }
+
+    private static int minFlipsForColumns(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int totalFlips = 0;
+
+        for(int j = 0; j < n; j++) {
+            int flips = 0;
+
+            for(int i = 0; i < m / 2; i++) {
+                if(grid[i][j] != grid[m - i - 1][j]) {
+                    flips++;
+                }
+            }
+
+            totalFlips += flips;
+        }
+
+        return totalFlips;
+    }
+    
+    public int minFlips(int[][] grid) {
+        int rowFlips = minFlipsForRows(grid);
+        int colFlips = minFlipsForColumns(grid);
+
+        return Math.min(rowFlips, colFlips);
+    }
+}
