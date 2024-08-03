@@ -1,0 +1,41 @@
+//Find number of winning players
+
+class Solution {
+    public int winningPlayerCount(int n, int[][] pick) {
+        Map<Integer, Map<Integer, Integer>> colorCount = new HashMap<>();
+        
+        for(int[] p : pick) {
+            int player = p[0];
+            int color = p[1];
+            
+            colorCount.putIfAbsent(player, new HashMap<>());
+            Map<Integer, Integer> playerColorMap = colorCount.get(player);
+            
+            playerColorMap.put(color, playerColorMap.getOrDefault(color, 0) + 1);
+        }
+        
+        int winningPlayers = 0;
+        
+        for(int player = 0; player < n; player++) {
+            int requiredBalls = player + 1;
+            boolean wins = false;
+            
+            if(colorCount.containsKey(player)) {
+                Map<Integer, Integer> playerColorMap = colorCount.get(player);
+
+                for(int count : playerColorMap.values()) {
+                    if(count >= requiredBalls) {
+                        wins = true;
+                        break;
+                    }
+                }
+            }
+            
+            if(wins) {
+                winningPlayers++;
+            }
+        }
+        
+        return winningPlayers;
+    }
+}
