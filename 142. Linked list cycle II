@@ -1,0 +1,35 @@
+//142. Linked list cycle II
+
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int x) {
+        val = x;
+        next = null;
+    }
+}
+
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode slowp = head;
+        ListNode fastp = head;
+
+        while(fastp != null && fastp.next != null) {
+            slowp = slowp.next;
+            fastp = fastp.next.next;
+
+            if(slowp == fastp) {
+                slowp = head;
+                
+                while(slowp != fastp) {
+                    slowp = slowp.next;
+                    fastp = fastp.next;
+                }
+
+                return slowp;
+            }
+        }
+
+        return null;
+    }
+}
