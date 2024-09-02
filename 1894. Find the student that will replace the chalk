@@ -1,0 +1,20 @@
+//1894. Find the student that will replace the chalk
+
+class Solution {
+    public int chalkReplacer(int[] chalk, int k) {
+        while(k > 0) {
+            int i = 0;
+
+            while(i < chalk.length) {
+                if(chalk[i] > k) {
+                    return i;
+                }
+
+                k -= chalk[i];
+                i++;
+            }
+        }
+
+        return 0;
+    }
+}
