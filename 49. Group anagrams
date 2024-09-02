@@ -1,0 +1,75 @@
+//49. Group anagrams
+
+//Solution 1
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+
+        for(String s : strs) {
+            String freq = getFrequency(s);
+
+            if(map.containsKey(freq)) {
+                map.get(freq).add(s);
+            }
+            else {
+                List<String> str = new ArrayList<>();
+
+                str.add(s);
+                map.put(freq, str);
+            }
+        }
+
+        return new ArrayList<>(map.values());
+    }
+
+    String getFrequency(String s) {
+        int[] f = new int[26];
+
+        for(char c : s.toCharArray()) {
+            f[c - 'a']++;
+        }
+
+        StringBuilder str = new StringBuilder();
+        char c = 'a';
+
+        for(int i : f) {
+            str.append(c);
+            str.append(i);
+
+            c++;
+        }
+
+        return str.toString();
+    }
+}
+
+//Solution 2
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+
+        for(String s : strs) {
+            String temp = sort(s);
+
+            if(map.containsKey(temp)) {
+                map.get(temp).add(s);
+            }
+            else {
+                List<String> str = new ArrayList<>();
+
+                str.add(s);
+                map.put(temp, str);
+            }
+        }
+
+        return new ArrayList<>(map.values());
+    }
+
+    String sort(String s) {
+        char[] carr = s.toCharArray();
+
+        Arrays.sort(carr);
+
+        return new String(carr);
+    }
+}
