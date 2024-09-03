@@ -1,0 +1,26 @@
+//1945. Sum of digits of string after convert
+
+class Solution {
+    public int getLucky(String s, int k) {
+        StringBuilder sb = new StringBuilder();
+        int[] freq = new int[26];
+        int sum = 0;
+
+        for(char c : s.toCharArray()) {
+           sb.append(c - 'a' + 1);
+        }
+
+        while(k > 0) {
+            sum = 0;
+
+           for(char c : sb.toString().toCharArray()) {
+                sum += c - '0';
+            }
+
+            sb = new StringBuilder(String.valueOf(sum));
+            k--;
+        }
+
+        return Integer.parseInt(sb.toString());
+    }
+}
