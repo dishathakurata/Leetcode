@@ -1,0 +1,48 @@
+//3217. Delete nodes from linked list present in array
+
+public class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+}
+
+class Solution {
+    public ListNode modifiedList(int[] nums, ListNode head) {
+        if(nums.length == 0) {
+            return head;
+        }
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for(int i = 0; i < nums.length; i++) {
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        }
+
+        while(map.containsKey(head.val) && head != null) {
+            if(head.next == null) {
+                return null;
+            }
+
+            head = head.next;
+        }
+
+        if(!map.containsKey(head.val) && head.next == null) {
+            return head;
+        }
+
+        ListNode cur = head;
+
+        while(cur.next != null) {
+            if(map.containsKey(cur.next.val)) {
+                cur.next = cur.next.next;
+            }
+            else {
+                cur = cur.next;
+            }
+        }
+
+        return head;
+    }
+}
