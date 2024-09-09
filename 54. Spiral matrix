@@ -20,7 +20,7 @@ class Solution {
 
             if(top <= bottom) {
                 for(int i = right; i >= left; i--) {
-                    ans.add(matrix[bottom ][i]);
+                    ans.add(matrix[bottom][i]);
                 }
                 bottom--;
             }
