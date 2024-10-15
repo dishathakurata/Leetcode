@@ -1,0 +1,27 @@
+//2938. Separate black and white balls
+
+class Solution {
+    public long minimumSteps(String s) {
+        char[] ch = s.toCharArray();
+        long count = 0, zeros = 0;
+        int i = s.length() - 1;
+
+        while(ch[i] == '1' && i > 0) {
+            i--;
+        }
+
+        while(i >= 0) {
+            if(ch[i] == '0') {
+                zeros++;
+            }
+
+            else if(ch[i] == '1') {
+                count += zeros;
+            }
+
+            i--;
+        }
+
+        return count;
+    }
+}
