@@ -1,0 +1,57 @@
+//1813. Sentence similarity III
+
+class Solution {
+    private List<String> convert(String sentence) {
+        sentence += " ";
+        List<String> ans = new ArrayList<>();
+        StringBuilder word = new StringBuilder();
+
+        for(int i = 0; i < sentence.length(); i++) {
+            if(sentence.charAt(i) == ' ') {
+                ans.add(word.toString());
+                word.setLength(0);
+            }
+            else {
+                word.append(sentence.charAt(i));
+            }
+        }
+
+        return ans;
+    }
+
+    public boolean areSentencesSimilar(String x, String y) {
+        if(x.length() < y.length()) {
+            String temp = x;
+            x = y;
+            y = temp;
+        }
+
+        List<String> vx = convert(x);
+        List<String> vy = convert(y);
+
+        int l = 0;
+
+        for(int i = 0; i < vy.size(); i++) {
+            if (vx.get(i).equals(vy.get(i))) {
+                l++;
+            }
+            else {
+                break;
+            }
+        }
+
+        int ind = vx.size() - 1, r = vy.size();
+
+        for(int i = vy.size() - 1; i >= 0; i--) {
+            if(vy.get(i).equals(vx.get(ind))) {
+                ind--;
+                r = i;
+            }
+            else {
+                break;
+            }
+        }
+
+        return r <= l;
+    }
+}
