@@ -1,0 +1,30 @@
+//2275. Largest combination with bitwise AND greater than zero
+
+class Solution {
+    public int largestCombination(int[] candidates) {
+        int max = 0;
+        int size = 0;
+
+        for(int n : candidates) {
+            if(n > max) {
+                max = n;
+            }
+        }
+
+        for(int mask = 1; mask <= max; mask <<= 1) {
+            int count = 0;
+            
+            for(int n : candidates) {
+                if((n & mask) > 0) {
+                    count++;
+                }
+            }
+
+            if(count > size) {
+                size = count;
+            }
+        }
+
+        return size;
+    }
+}
