@@ -6,6 +6,6 @@ class Solution {
             return 1;
         }
 
-        return 2L * n * (n-1) + 1;
+        return 2L * n * (n - 1) + 1;
     }
 }
