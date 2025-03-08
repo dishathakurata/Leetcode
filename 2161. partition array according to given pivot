@@ -1,4 +1,4 @@
-//2161. partition array according to given pivot
+//2161. Partition array according to given pivot
 
 class Solution {
     public int[] pivotArray(int[] nums, int pivot) {
