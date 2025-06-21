@@ -1,0 +1,45 @@
+//1901. Find a peak element II
+
+class Solution {
+    public int[] findPeakGrid(int[][] mat) {
+        int low = 0, high = mat[0].length;
+        int[] ans = new int[2];
+
+        while(low <= high) {
+            int mid = (low + high) / 2;
+            int ind = findMax(mat, mid);
+            int left = mid - 1 >= 0 ? mat[ind][mid - 1] : -1;
+            int right = mid + 1 < mat[0].length ? mat[ind][mid + 1] : -1;
+
+            if(left > mat[ind][mid]) {
+                high = mid - 1;
+            }
+            else if(right > mat[ind][mid]) {
+                low = mid + 1;
+            }
+            else {
+                ans[0] = ind;
+                ans[1] = mid;
+                return ans;
+            }
+        }
+
+        ans[0] = -1;
+        ans[1] = -1;
+        return ans;
+    }
+
+    public int findMax(int[][] mat, int mid) {
+        int maxi = Integer.MIN_VALUE;
+        int ind = 0;
+
+        for(int i = 0; i < mat.length; i++) {
+            if(maxi < mat[i][mid]) {
+                maxi = mat[i][mid];
+                ind = i;
+            }
+        }
+
+        return ind;
+    }
+}
