@@ -1,0 +1,51 @@
+//410. Split array largest sum
+
+class Solution {
+    public int splitArray(int[] nums, int k) {
+        int low = findMax(nums), high = findSum(nums);
+
+        while(low <= high) {
+            int mid = (low + high) / 2;
+            int cur = 0, count = 1;
+
+            for(int i = 0; i < nums.length; i++) {
+                if((nums[i] + cur) > mid) {
+                    cur = nums[i];
+                    count++;
+                }
+                else {
+                    cur += nums[i];
+                }
+            }
+
+            if(count > k) {
+                low = mid + 1;
+            }
+            else {
+                high = mid - 1;
+            }
+        }
+
+        return low;
+    }
+
+    public int findMax(int[] arr) {
+        int maxi = Integer.MIN_VALUE;
+
+        for(int n : arr) {
+            maxi = Math.max(maxi, n);
+        }
+
+        return maxi;
+    }
+
+    public int findSum(int[] arr) {
+        int sum = 0;
+
+        for(int n : arr) {
+            sum += n;
+        }
+
+        return sum;
+    }
+}
