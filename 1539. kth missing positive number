@@ -1,0 +1,25 @@
+//1539. kth missing positive number
+
+class Solution {
+    public int findKthPositive(int[] arr, int k) {
+        int n = k, i = 1, j = 0;
+
+        while(k > 0) {
+            if(j < arr.length && arr[j] == i) {
+                j++;
+                i++;
+            }
+            else {
+                k--;
+
+                if(k == 0) {
+                    break;
+                }
+
+                i++;
+            }
+        }
+
+        return i;
+    }
+}
