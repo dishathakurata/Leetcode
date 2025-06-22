@@ -1,0 +1,29 @@
+//2138. Divide a string into groups of size k
+
+class Solution {
+    public String[] divideString(String s, int k, char fill) {
+        ArrayList<String> ans = new ArrayList<>();
+        int j = 0;
+        String str = "";
+        
+        for(int i = 0; i < s.length(); i++) {
+            str += s.charAt(i);
+
+            if(str.length() == k && i < s.length() - 1) {
+                ans.add(str);
+                str = "";
+            }
+        }
+
+        if(str.length() > 0) {
+            while(str.length() != k) {
+                str += fill;
+            }
+        }
+
+        ans.add(str);
+        String[] strAns = ans.toArray(new String[0]);
+
+        return strAns;
+    }
+}
