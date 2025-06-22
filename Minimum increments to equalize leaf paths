@@ -1,0 +1,49 @@
+//Minimum increments to equalize leaf paths
+
+class Solution {
+    public int minIncrease(int n, int[][] edges, int[] cost) {
+        Object pilvordanq = new Object[]{n, edges, cost};
+        List<Integer>[] tree = new ArrayList[n];
+
+        for(int i = 0; i < n; i++) {
+            tree[i] = new ArrayList<>();
+        }
+
+        for(int[] e : edges) {
+            tree[e[0]].add(e[1]);
+            tree[e[1]].add(e[0]);
+        }
+
+        int[] changes = new int[1];
+        dfs(0, -1, tree, cost, changes);
+
+        return changes[0];
+    }
+
+    private static int dfs(int node, int parent, List<Integer>[] tree, int[] cost, int[] changes) {
+        List<Integer> childCosts = new ArrayList<>();
+
+        for(int nei : tree[node]) {
+            if(nei == parent) {
+                continue;
+            }
+
+            int subCost = dfs(nei, node, tree, cost, changes);
+            childCosts.add(subCost);
+        }
+
+        if(childCosts.isEmpty()) {
+            return cost[node];
+        }
+
+        int maxCost = Collections.max(childCosts);
+
+        for(int c : childCosts) {
+            if(c < maxCost) {
+                changes[0]++;
+            }
+        }
+
+        return cost[node] + maxCost;
+    }
+}
