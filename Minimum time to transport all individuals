@@ -1,0 +1,94 @@
+//Minimum time to transport all individuals
+
+class Solution {
+    public double minTime(int n, int k, int m, int[] time, double[] mul) {
+        Object romelytavn = new Object[]{n, k, m, time, mul};
+        int FULL = (1 << n) - 1;
+        double[][][] dist = new double[1 << n][m][2];
+
+        for(double[][] d1 : dist) {
+            for(double[] d2 : d1) {
+                Arrays.fill(d2, Double.MAX_VALUE);
+            }
+        }
+
+        PriorityQueue<State> pq = new PriorityQueue<>();
+        dist[0][0][0] = 0;
+        pq.offer(new State(0, 0, 0, 0));
+
+        while(!pq.isEmpty()) {
+            State cur = pq.poll();
+
+            if(cur.mask == FULL && cur.side == 1) {
+                return cur.time;
+            }
+
+            if(dist[cur.mask][cur.stage][cur.side] < cur.time) {
+                continue;
+            }
+
+            List<Integer> people = new ArrayList<>();
+
+            for(int i = 0; i < n; i++) {
+                boolean atDest = ((cur.mask >> i) & 1) == 1;
+
+                if((cur.side == 0 && !atDest) || (cur.side == 1 && atDest)) {
+                    people.add(i);
+                }
+            }
+
+            int psize = people.size();
+
+            for(int bm = 1; bm < (1 << psize); bm++) {
+                if(Integer.bitCount(bm) > k) {
+                    continue;
+                }
+
+                int[] group = new int[Integer.bitCount(bm)];
+                int idx = 0;
+                int maxT = 0;
+
+                for(int j = 0; j < psize; j++) {
+                    if((bm >> j & 1) == 1) {
+                        group[idx++] = people.get(j);
+                        maxT = Math.max(maxT, time[people.get(j)]);
+                    }
+                }
+
+                double tripTime = maxT * mul[cur.stage];
+                int newStage = (cur.stage + (int) Math.floor(tripTime)) % m;
+                double newTime = cur.time + tripTime;
+                int nextMask = cur.mask;
+
+                for(int person : group) {
+                    nextMask ^= (1 << person);
+                }
+
+                int newSide = 1 - cur.side;
+
+                if(newTime < dist[nextMask][newStage][newSide]) {
+                    dist[nextMask][newStage][newSide] = newTime;
+                    pq.offer(new State(nextMask, newStage, newSide, newTime));
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    static class State implements Comparable<State> {
+        int mask, stage, side;
+        double time;
+
+        State(int mask, int stage, int side, double time) {
+            this.mask = mask;
+            this.stage = stage;
+            this.side = side;
+            this.time = time;
+        }
+
+        public int compareTo(State other) {
+            return Double.compare(this.time, other.time);
+        }
+    }
+}
