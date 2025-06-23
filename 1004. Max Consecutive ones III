@@ -1,0 +1,37 @@
+//1004. Max Consecutive ones III
+
+class Solution {
+    public int longestOnes(int[] nums, int k) {
+        int maxLen = 0, len = 0, zeros = 0;
+        Queue<Integer> q = new LinkedList<>();
+
+        for(int n : nums) {
+            if(n == 1) {
+                len++;
+                q.add(n);
+            }
+            else {
+                zeros++;
+                q.add(n);
+
+                if(zeros > k) {
+                    maxLen = Math.max(len + k, maxLen);
+
+                    while(!q.isEmpty() && q.peek() != 0) {
+                        q.remove();
+                        len--;
+                    }
+
+                    q.remove();
+                    zeros--;
+                }
+            }
+        }
+
+        if(zeros <= k) {
+            maxLen = Math.max(maxLen, len + zeros);
+        }
+
+        return maxLen;
+    }
+}
