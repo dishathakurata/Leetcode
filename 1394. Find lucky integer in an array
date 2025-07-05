@@ -1,0 +1,22 @@
+//1394. Find lucky integer in an array
+
+class Solution {
+    public int findLucky(int[] arr) {
+        Map<Integer, Integer> map = new TreeMap<>();
+
+        for(int n : arr) {
+            map.put(n, map.getOrDefault(n, 0) + 1);
+        }
+
+        TreeMap<Integer, Integer> sortedMap = new TreeMap<>(Collections.reverseOrder());
+        sortedMap.putAll(map);
+
+        for(Map.Entry<Integer, Integer> mapEl : sortedMap.entrySet()) {
+            if(mapEl.getKey() == mapEl.getValue()) {
+                return mapEl.getKey();
+            }
+        }
+
+        return -1;
+    }
+}
