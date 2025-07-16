@@ -1,0 +1,38 @@
+//230. kth smallest element in a BST
+
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        PriorityQueue<Integer> q = new PriorityQueue<>();
+        queFill(q, root);
+
+        while(k > 1) {
+            q.poll();
+            k--;
+        }
+
+        return q.poll();
+    }
+
+    public void queFill(PriorityQueue<Integer> q, TreeNode root) {
+        if(root == null) {
+            return;
+        }
+
+        q.offer(root.val);
+        queFill(q, root.left);
+        queFill(q, root.right);
+    }
+}
